@@ -108,3 +108,20 @@ button:hover {
   object-fit: contain;
 }
 
+.input-row button {
+  margin-left: 10px;
+}
+
+.input-row button:last-child {
+  background-color: #444;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.input-row button:last-child:hover {
+  background-color: #666;
+}

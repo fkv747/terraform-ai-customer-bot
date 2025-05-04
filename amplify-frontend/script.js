@@ -47,3 +47,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+function downloadTranscript() {
+  const url = `https://98ufjyie04.execute-api.us-east-1.amazonaws.com/get-transcript?session_id=${sessionId}`;
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `chat_transcript_${sessionId}.txt`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
