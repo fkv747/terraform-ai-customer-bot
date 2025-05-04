@@ -1,3 +1,7 @@
+// Generate a consistent session ID for this tab (once per session)
+const sessionId = sessionStorage.getItem("sessionId") || crypto.randomUUID();
+sessionStorage.setItem("sessionId", sessionId);
+
 const chatBox = document.getElementById("chat-box");
 const userInput = document.getElementById("userInput");
 
@@ -15,7 +19,7 @@ async function sendMessage() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ prompt })
+      body: JSON.stringify({ prompt, session_id: sessionId })
     });
 
     const data = await response.json();
