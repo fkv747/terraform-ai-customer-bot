@@ -1,166 +1,95 @@
-import boto3
 import json
+import boto3
 import os
-from datetime import datetime
-import uuid
-
-# Initialize Bedrock and DynamoDB
-bedrock = boto3.client("bedrock-runtime", region_name=os.environ["REGION"])
-dynamodb = boto3.resource("dynamodb", region_name=os.environ["REGION"])
-TABLE_NAME = "chat_history"
 
 def lambda_handler(event, context):
-    try:
-        method = event.get("httpMethod", "")
-        path = event.get("path", "")
+    # Parse input from the frontend
+    body = json.loads(event.get("body", "{}"))
+    user_input = body.get("message", "")
 
-        # === Handle CORS Preflight ===
-        if method == "OPTIONS":
-            return {
-                "statusCode": 200,
-                "headers": {
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
-                    "Access-Control-Allow-Headers": "*"
-                },
-                "body": ""
-            }
+    # Inject your custom FAQ prompt
+    prompt = f"""
+You are Friday. Answer questions based only on the following FAQs:
 
-        # === Handle Transcript Download ===
-        if method == "GET" and path == "/get-transcript":
-            params = event.get("queryStringParameters") or {}
-            session_id = params.get("session_id")
-            if not session_id:
-                return {
-                    "statusCode": 400,
-                    "headers": {
-                        "Access-Control-Allow-Origin": "*",
-                        "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
-                        "Access-Control-Allow-Headers": "*",
-                        "Content-Type": "application/json"
-                    },
-                    "body": json.dumps({"error": "Missing session_id"})
-                }
+1. What’s your return policy?
+→ You can return items within 30 days of purchase.
 
-            table = dynamodb.Table(TABLE_NAME)
-            response = table.query(
-                KeyConditionExpression=boto3.dynamodb.conditions.Key('session_id').eq(session_id),
-                ScanIndexForward=True
-            )
-            items = response.get("Items", [])
+2. Do you offer free shipping?
+→ Yes, for orders over $50.
 
-            transcript_lines = []
-            for item in items:
-                timestamp = item.get("timestamp", "")
-                prompt = item.get("prompt", "")
-                reply = item.get("response", "")
-                transcript_lines.append(f"[{timestamp}] You: {prompt}")
-                transcript_lines.append(f"[{timestamp}] Friday: {reply}")
-                transcript_lines.append("")
+3. How do I track my Amazon order? 
+→ Go to your Amazon account > Orders > Track Package.
 
-            transcript_text = "\n".join(transcript_lines)
+4. What is Amazon AWS? 
+→ AWS (Amazon Web Services) is Amazon's cloud computing platform.
 
-            return {
-                "statusCode": 200,
-                "headers": {
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
-                    "Access-Control-Allow-Headers": "*",
-                    "Content-Type": "text/plain",
-                    "Content-Disposition": f"attachment; filename=chat_transcript_{session_id}.txt"
-                },
-                "body": transcript_text
-            }
+5. How to return an item on Amazon? 
+→ Visit your orders page, select the item, and choose 'Return or Replace Items'.
 
-        # === Handle POST /chat ===
-        body = json.loads(event.get("body", "{}"))
-        user_message = body.get("message", "Hello, how can I help you today?")
-        session_id = body.get("session_id", str(uuid.uuid4()))
-        model_id = os.environ["MODEL_ID"]
+6. Who is the CEO of Amazon?
+→ Andy Jassy is the current CEO of Amazon.
 
-        # Get recent chat history
-        table = dynamodb.Table(TABLE_NAME)
-        response = table.query(
-            KeyConditionExpression=boto3.dynamodb.conditions.Key('session_id').eq(session_id),
-            ScanIndexForward=False,
-            Limit=5
-        )
-        history_items = response.get("Items", [])
-        history_items.reverse()
+7. How do I contact Amazon customer service?
+→ You can contact Amazon customer service through the Help section on their website.
 
-        history_lines = []
-        for item in history_items:
-            history_lines.append(f"User: {item.get('prompt', '')}")
-            history_lines.append(f"Friday: {item.get('response', '')}")
-        history_text = "\n".join(history_lines)
+8. What payment methods does Amazon accept?
+→ Amazon accepts credit cards, debit cards, and Amazon gift cards.
 
-        # Final prompt format
-        prompt = f"""
-You are Friday, a smart and witty AI assistant inspired by Tony Stark's personal AI.
+9. How do I change my Amazon account password?
+→ Go to Your Account > Login & security > Edit > Change password.
 
-Always respond with clarity, charm, and a hint of dry humor. Keep replies helpful and end with a fitting emoji — like 😎 or 🤖.
+10. What is Amazon Prime?
+→ Amazon Prime is a subscription service that offers free shipping, streaming, and more.
 
-Conversation History:
-{history_text}
+11. How do I cancel my Amazon Prime membership?
+→ Go to Your Account > Prime Membership > Manage Membership > End Membership.
 
-New Message:
-User: {user_message}
-Friday:
+12. How do I update my shipping address on Amazon?
+→ Go to Your Account > Your Addresses > Add a new address or edit an existing one.
+
+Now answer the following question naturally and clearly:
+{user_input}
 """
 
-        payload = {
-            "inputText": prompt,
-            "textGenerationConfig": {
-                "maxTokenCount": 300,
-                "temperature": 0.7,
-                "topP": 0.9,
-                "stopSequences": ["User:", "Friday:"]
-            }
+    # Call Amazon Bedrock (Titan Text G1)
+    bedrock = boto3.client("bedrock-runtime", region_name="us-east-1")
+    
+    payload = {
+        "inputText": prompt,
+        "textGenerationConfig": {
+            "temperature": 0.5,
+            "maxTokenCount": 200,
+            "stopSequences": [],
+            "topP": 0.9
         }
+    }
 
-        bedrock_response = bedrock.invoke_model(
+    try:
+        response = bedrock.invoke_model(
             body=json.dumps(payload),
-            modelId=model_id,
+            modelId="amazon.titan-text-express-v1",
             accept="application/json",
             contentType="application/json"
         )
-        response_body = json.loads(bedrock_response['body'].read())
-        ai_reply = response_body.get("results", [{}])[0].get("outputText", "")
 
-        # Save only the clean user input + reply
-        table.put_item(
-            Item={
-                "session_id": session_id,
-                "timestamp": datetime.utcnow().isoformat(),
-                "prompt": user_message,
-                "response": ai_reply
-            }
-        )
+        response_body = json.loads(response['body'].read())
+        generated_text = response_body['results'][0]['outputText']
 
         return {
             "statusCode": 200,
             "headers": {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
-                "Access-Control-Allow-Headers": "*",
-                "Content-Type": "application/json"
+                "Access-Control-Allow-Origin": "*"
             },
             "body": json.dumps({
-                "session_id": session_id,
-                "prompt": user_message,
-                "response": ai_reply
+                "response": generated_text
             })
         }
 
     except Exception as e:
-        print("ERROR:", str(e))
         return {
             "statusCode": 500,
+            "body": json.dumps({"error": str(e)}),
             "headers": {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
-                "Access-Control-Allow-Headers": "*",
-                "Content-Type": "application/json"
-            },
-            "body": json.dumps({"error": str(e)})
+                "Access-Control-Allow-Origin": "*"
+            }
         }
