@@ -50,7 +50,7 @@ Your response:
         table = dynamodb.Table(TABLE_NAME)
         table.put_item(
             Item={
-                "session_id": str(uuid.uuid4()),
+                "session_id": body.get("session_id", str(uuid.uuid4())),
                 "timestamp": datetime.utcnow().isoformat(),
                 "prompt": prompt,
                 "response": ai_reply

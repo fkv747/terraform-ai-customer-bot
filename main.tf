@@ -27,7 +27,6 @@ module "api_gateway" {
 module "amplify" {
   source              = "./modules/amplify"
   app_name            = "ai-customer-frontend"
-  github_repo_url     = "https://github.com/fkv747/terraform-ai-customer-bot"
-  github_access_token = var.github_token
+  github_repo_url = "git@github.com:fkv747/terraform-ai-customer-bot.git"
 }
 
