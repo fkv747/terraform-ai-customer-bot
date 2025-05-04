@@ -38,8 +38,10 @@ function appendMessage(sender, message) {
 document.getElementById("user-input").addEventListener("keydown", function(event) {
   if (event.key === "Enter") {
     event.preventDefault();  // Prevent new line
-    send();                  // Call your send() function
+    sendMessage();  // Call your send() function
   }
 });
+
+
 
 // Temp change to trigger Git commit
