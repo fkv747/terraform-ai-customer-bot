@@ -34,14 +34,12 @@ function appendMessage(sender, message) {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// Enable pressing "Enter" to send message
-document.getElementById("user-input").addEventListener("keydown", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();  // Prevent new line
-    sendMessage();  // Call your send() function
-  }
+// Wait for DOM to be ready before attaching Enter listener
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("userInput").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      sendMessage();  // <- Make sure this matches your function name
+    }
+  });
 });
-
-
-
-// Temp change to trigger Git commit
