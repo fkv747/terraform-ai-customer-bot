@@ -24,9 +24,4 @@ module "api_gateway" {
   lambda_name  = module.lambda.lambda_function_name  # ✅ Must be exported in lambda module
 }
 
-module "amplify" {
-  source              = "./modules/amplify"
-  app_name            = "ai-customer-frontend"
-  github_repo_url = "git@github.com:fkv747/terraform-ai-customer-bot.git"
-}
 
