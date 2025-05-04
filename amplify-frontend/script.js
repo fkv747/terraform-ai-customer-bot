@@ -19,7 +19,7 @@ async function sendMessage() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ prompt, session_id: sessionId })
+      body: JSON.stringify({ message: prompt, session_id: sessionId })
     });
 
     const data = await response.json();

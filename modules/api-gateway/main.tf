@@ -41,3 +41,15 @@ resource "aws_lambda_permission" "allow_apigw_invoke" {
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.chat_api.execution_arn}/*/*"
 }
+
+resource "aws_apigatewayv2_route" "get_transcript" {
+  api_id    = aws_apigatewayv2_api.chat_api.id
+  route_key = "GET /get-transcript"
+  target    = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
+}
+
+resource "aws_apigatewayv2_route" "options_transcript" {
+  api_id    = aws_apigatewayv2_api.chat_api.id
+  route_key = "OPTIONS /get-transcript"
+  target    = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
+}
