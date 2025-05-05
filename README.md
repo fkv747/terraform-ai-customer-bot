@@ -13,7 +13,22 @@ This project is a real-time, serverless chatbot powered by **Amazon Bedrock (Tit
 
 ---
 
-## 🎥 Demo
+## Demo
+
+🎥 **Watch the full demo on YouTube**  
+
+
+[Watch the YouTube demo](https://youtu.be/)
+
+---
+
+## 📊 Architecture
+
+This diagram summarizes the AWS architecture of this project:
+
+![Architecture](./screenshots/ai-customer-bot.png)
+
+---
 
 👁️ **Live Chatbot UI:**  
 ![Chatbot UI](./screenshots/Webpage.png)
@@ -26,16 +41,8 @@ This project is a real-time, serverless chatbot powered by **Amazon Bedrock (Tit
 
 > 📝 *Note: The service is turned off to reduce AWS costs. All infrastructure can be redeployed using this repo.*
 
----
-
-## 📊 Architecture
-
-This diagram summarizes the AWS architecture of this project:
-
-![Architecture](./screenshots/ai-customer-bot.png)
 
 ---
-
 ## 📥 How It Works
 
 1. **User** types a question into the Amplify-hosted chatbot UI.
