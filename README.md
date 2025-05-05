@@ -83,7 +83,7 @@ You will deploy:
   The frontend was deployed using Amplify and connected to GitHub for CI/CD. A custom subdomain (`chatbot.fkvventures.com`) was added using Route 53.  
   SSL is managed by Amplify with AWS-managed ACM certificates.  
   Some parts of the setup — like domain connection and certificate validation — were done manually through the AWS Console due to Terraform limitations with Amplify and Route 53.  
-  [Read more here](https://docs.aws.amazon.com/amplify/latest/userguide/custom-domains.html)  
+  [Full AWS Guide here](https://docs.aws.amazon.com/amplify/latest/userguide/custom-domains.html)  
   ![Route 53 + Amplify](./screenshots/amplify-route53.png)
 
 
