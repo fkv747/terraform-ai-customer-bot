@@ -1,6 +1,11 @@
 import json
 import boto3
 import os
+import uuid
+from datetime import datetime
+
+dynamodb = boto3.resource("dynamodb", region_name="us-east-1")
+table = dynamodb.Table("chat_history") 
 
 def lambda_handler(event, context):
     # Parse input from the frontend
@@ -75,6 +80,16 @@ Now answer the following question naturally and clearly:
         response_body = json.loads(response['body'].read())
         generated_text = response_body['results'][0]['outputText']
 
+        # ✅ NEW: Log to DynamoDB
+        table.put_item(
+        Item={
+            "session_id": str(uuid.uuid4()),
+            "timestamp": datetime.utcnow().isoformat(),
+            "user_input": user_input,
+            "bot_response": generated_text
+        }
+)
+     
         return {
             "statusCode": 200,
             "headers": {
