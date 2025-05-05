@@ -38,7 +38,7 @@ This diagram summarizes the AWS architecture of this project:
 ![Chatbot Response](./screenshots/Webpage-prompt.png)
 
 🧾 **Transcript Feature:**  
-![Transcript Output](./screenshots/Download-Transcript.png)
+![Transcript Output](./screenshots/Download-Transcripts.png)
 > 📝 *Note: The service is turned off to reduce AWS costs. All infrastructure can be redeployed using this repo.*
 
 
