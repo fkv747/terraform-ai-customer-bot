@@ -7,7 +7,7 @@
 ![Amazon Bedrock](https://img.shields.io/badge/Amazon%20Bedrock-Titan%20Text%20G1-1A6FFF?style=for-the-badge&logo=amazonaws)
 ![AWS Amplify](https://img.shields.io/badge/AWS%20Amplify-Frontend-FF9900?style=for-the-badge&logo=awsamplify)
 ![AWS DynamoDB](https://img.shields.io/badge/AWS%20DynamoDB-Session%20Log-4053D6?style=for-the-badge&logo=amazonaws)
-+ ![API Gateway](https://img.shields.io/badge/API%20Gateway-HTTP%20API-DD3464?style=for-the-badge&logo=amazonaws)
+![API Gateway](https://img.shields.io/badge/API%20Gateway-HTTP%20API-DD3464?style=for-the-badge&logo=amazonaws)
 
 
 This project is a real-time, serverless chatbot powered by **Amazon Bedrock (Titan G1)** and delivered through a clean Amplify frontend. It pulls responses from a custom FAQ prompt, logs chats to DynamoDB, and is deployed with Terraform.
