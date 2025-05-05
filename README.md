@@ -39,7 +39,6 @@ This diagram summarizes the AWS architecture of this project:
 
 🧾 **Transcript Feature:**  
 ![Transcript Output](./screenshots/Download-Transcript.png)
-
 > 📝 *Note: The service is turned off to reduce AWS costs. All infrastructure can be redeployed using this repo.*
 
 
