@@ -1,4 +1,5 @@
-# AI Customer Service Bot — Bedrock-Powered FAQ Assistant
+# AI Customer Assistant — Serverless Chatbot with Bedrock, Lambda, API Gateway, and Terraform
+
 
 ![IaC](https://img.shields.io/badge/IaC-Terraform-7B42BC?style=for-the-badge&logo=terraform)
 ![Cloud](https://img.shields.io/badge/Cloud-AWS-232F3E?style=for-the-badge&logo=amazonaws)
@@ -108,9 +109,7 @@ You will deploy:
 
 ## 🔧 Future Enhancements
 
-- Add Cognito for user-specific sessions
 - Swap Titan with Claude (also via Bedrock)
-- Add API Gateway usage limits / throttling
 - Load FAQ data dynamically from S3
 
 ---
