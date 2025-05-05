@@ -1,4 +1,4 @@
-# AI Customer Assistant — Serverless Chatbot with Bedrock, Lambda, API Gateway, and Terraform
+# AI Customer Assistant — Serverless Chatbot Built with Bedrock, Lambda, and Terraform on AWS
 
 
 ![IaC](https://img.shields.io/badge/IaC-Terraform-7B42BC?style=for-the-badge&logo=terraform)
