@@ -7,8 +7,8 @@
 ![Amazon Bedrock](https://img.shields.io/badge/Amazon%20Bedrock-Titan%20Text%20G1-1A6FFF?style=for-the-badge&logo=amazonaws)
 ![AWS Amplify](https://img.shields.io/badge/AWS%20Amplify-Frontend-FF9900?style=for-the-badge&logo=awsamplify)
 ![AWS DynamoDB](https://img.shields.io/badge/AWS%20DynamoDB-Session%20Log-4053D6?style=for-the-badge&logo=amazonaws)
-![API Gateway](https://img.shields.io/badge/API%20Gateway-REST%20API-DD3464?style=for-the-badge&logo=amazonaws)
-![Serverless Architecture](https://img.shields.io/badge/Architecture-Serverless-4B5563?style=for-the-badge)
++ ![API Gateway](https://img.shields.io/badge/API%20Gateway-HTTP%20API-DD3464?style=for-the-badge&logo=amazonaws)
+
 
 This project is a real-time, serverless chatbot powered by **Amazon Bedrock (Titan G1)** and delivered through a clean Amplify frontend. It pulls responses from a custom FAQ prompt, logs chats to DynamoDB, and is deployed with Terraform.
 
@@ -31,19 +31,19 @@ This diagram summarizes the AWS architecture of this project:
 
 ---
 
-👁️ **Live Chatbot UI:**  
+**Live Chatbot UI:**  
 ![Chatbot UI](./screenshots/Webpage.png)
 
-💬 **Chat Example:**  
+**Chat Example:**  
 ![Chatbot Response](./screenshots/Webpage-prompt.png)
 
-🧾 **Transcript Feature:**  
+**Transcript Feature:**  
 ![Transcript Output](./screenshots/Download-Transcripts.png)
-> 📝 *Note: The service is turned off to reduce AWS costs. All infrastructure can be redeployed using this repo.*
+> *Note: The service is turned off to reduce AWS costs. All infrastructure can be redeployed using this repo.*
 
 
 ---
-## 📥 How It Works
+## How It Works
 
 1. **User** types a question into the Amplify-hosted chatbot UI.
 2. The frontend sends a `POST /chat` request via **API Gateway**.
@@ -59,7 +59,7 @@ This diagram summarizes the AWS architecture of this project:
 
 ---
 
-## 🛠 Deployment with Terraform
+## Deployment with Terraform
 
 Clone and deploy:
 
@@ -89,12 +89,12 @@ You will deploy:
 
 ---
 
-## ⚙️ Services Used
+## Services Used
 
 | Layer       | Service                         |
 |-------------|----------------------------------|
 | Frontend    | AWS Amplify + Route 53           |
-| API         | Amazon API Gateway (REST)        |
+| API         | Amazon API Gateway (HTTP)        |
 | Compute     | AWS Lambda                       |
 | AI Model    | Amazon Bedrock – Titan Text G1   |
 | Database    | DynamoDB (chat session log)      |
@@ -103,7 +103,7 @@ You will deploy:
 
 ---
 
-## 🧾 DynamoDB Table
+## DynamoDB Table
 
 **Table Name:** `chat_history`  
 **Partition Key:** `session_id` (String)
