@@ -53,9 +53,8 @@ This diagram summarizes the AWS architecture of this project:
 5. The prompt is sent to **Amazon Bedrock (Titan G1)** and a response is returned.
    ![Lambda Output 1](./screenshots/7-lambda-test-success.png)
 6. Lambda returns the message and logs it into **DynamoDB**.
-   ![Lambda Output 2](./screenshots/7-lambda-test-success-2.png)
-7. Session logs are viewable via DynamoDB and CloudWatch.
    ![DynamoDB Log](./screenshots/9-dynamodb-chat-history.png)  
+7. Session logs are viewable via DynamoDB and CloudWatch.
    ![CloudWatch Log](./screenshots/9-Cloudwatch-logs.png)
 
 ---
