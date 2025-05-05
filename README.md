@@ -1,0 +1,113 @@
+# AI Customer Service Bot — Bedrock-Powered FAQ Assistant
+
+![IaC](https://img.shields.io/badge/IaC-Terraform-7B42BC?style=for-the-badge&logo=terraform)
+![Cloud](https://img.shields.io/badge/Cloud-AWS-232F3E?style=for-the-badge&logo=amazonaws)
+![AWS Lambda](https://img.shields.io/badge/AWS%20Lambda-Serverless-F58536?style=for-the-badge&logo=awslambda)
+![Amazon Bedrock](https://img.shields.io/badge/Amazon%20Bedrock-Titan%20Text%20G1-1A6FFF?style=for-the-badge&logo=amazonaws)
+![AWS Amplify](https://img.shields.io/badge/AWS%20Amplify-Frontend-FF9900?style=for-the-badge&logo=awsamplify)
+![AWS DynamoDB](https://img.shields.io/badge/AWS%20DynamoDB-Session%20Log-4053D6?style=for-the-badge&logo=amazonaws)
+![API Gateway](https://img.shields.io/badge/API%20Gateway-REST%20API-DD3464?style=for-the-badge&logo=amazonaws)
+![Serverless Architecture](https://img.shields.io/badge/Architecture-Serverless-4B5563?style=for-the-badge)
+
+This project is a real-time, serverless chatbot powered by **Amazon Bedrock (Titan G1)** and delivered through a clean Amplify frontend. It pulls responses from a custom FAQ prompt, logs chats to DynamoDB, and is deployed with Terraform.
+
+---
+
+## 🎥 Demo
+
+👁️ **Live Chatbot UI:**  
+![Chatbot UI](./screenshots/Webpage.png)
+
+💬 **Chat Example:**  
+![Chatbot Response](./screenshots/Webpage-prompt.png)
+
+🧾 **Transcript Feature:**  
+![Transcript Output](./screenshots/Download-Transcript.png)
+
+> 📝 *Note: The service is turned off to reduce AWS costs. All infrastructure can be redeployed using this repo.*
+
+---
+
+## 📊 Architecture
+
+This diagram summarizes the AWS architecture of this project:
+
+![Architecture](./screenshots/ai-customer-bot.png)
+
+---
+
+## 📥 How It Works
+
+1. **User** types a question into the Amplify-hosted chatbot UI.
+2. The frontend sends a `POST /chat` request via **API Gateway**.
+   ![Postman Test](./screenshots/postman.png)
+3. API Gateway invokes a **Lambda function**.
+4. Lambda injects the user input into a pre-defined **FAQ prompt**.
+5. The prompt is sent to **Amazon Bedrock (Titan G1)** and a response is returned.
+   ![Lambda Output 1](./screenshots/7-lambda-test-success.png)
+6. Lambda returns the message and logs it into **DynamoDB**.
+   ![Lambda Output 2](./screenshots/7-lambda-test-success-2.png)
+7. Session logs are viewable via DynamoDB and CloudWatch.
+   ![DynamoDB Log](./screenshots/9-dynamodb-chat-history.png)  
+   ![CloudWatch Log](./screenshots/9-Cloudwatch-logs.png)
+
+---
+
+## 🛠 Deployment with Terraform
+
+Clone and deploy:
+
+```bash
+git clone https://github.com/yourusername/ai-customer-bot.git
+cd terraform
+terraform init
+terraform apply
+```
+
+You will deploy:
+- ✅ IAM roles & policies  
+  ![IAM Terraform](./screenshots/3-terraform-iam.png)
+- ✅ Lambda function  
+  ![Lambda Terraform](./screenshots/4-terraform-lambda.png)
+- ✅ API Gateway  
+  ![API Gateway Terraform](./screenshots/13-terraform-api-gateway.png)
+- ✅ DynamoDB table  
+  ![DynamoDB Terraform](./screenshots/8-terraform-dynamodb.png)
+- ✅ Route 53 + subdomain (manual validation required for ACM)
+  ![Route 53 Terraform](./screenshots/14-terraform route 53.png)
+
+---
+
+## ⚙️ Services Used
+
+| Layer       | Service                         |
+|-------------|----------------------------------|
+| Frontend    | AWS Amplify + Route 53           |
+| API         | Amazon API Gateway (REST)        |
+| Compute     | AWS Lambda                       |
+| AI Model    | Amazon Bedrock – Titan Text G1   |
+| Database    | DynamoDB (chat session log)      |
+| Monitoring  | CloudWatch (Lambda auto-logs)    |
+| Infra-as-Code | Terraform (backend only)       |
+
+---
+
+## 🧾 DynamoDB Table
+
+**Table Name:** `chat_history`  
+**Partition Key:** `session_id` (String)
+
+---
+
+## 🔧 Future Enhancements
+
+- Add Cognito for user-specific sessions
+- Swap Titan with Claude (also via Bedrock)
+- Add API Gateway usage limits / throttling
+- Load FAQ data dynamically from S3
+
+---
+
+## Connect with Me
+
+📫 [LinkedIn](https://www.linkedin.com/in/franc-kevin-v-07108b111/)
