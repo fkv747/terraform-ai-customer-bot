@@ -79,8 +79,13 @@ You will deploy:
   ![API Gateway Terraform](./screenshots/13-terraform-api-gateway.png)
 - ✅ DynamoDB table  
   ![DynamoDB Terraform](./screenshots/8-terraform-dynamodb.png)
-- ✅ Route 53 + subdomain (manual validation required for ACM)
-  ![Route 53 Terraform](./screenshots/14-terraform route 53.png)
+- ✅ Route 53 + Amplify (custom domain setup via AWS Console)  
+  The frontend was deployed using Amplify and connected to GitHub for CI/CD. A custom subdomain (`chatbot.fkvventures.com`) was added using Route 53.  
+  SSL is managed by Amplify with AWS-managed ACM certificates.  
+  Some parts of the setup — like domain connection and certificate validation — were done manually through the AWS Console due to Terraform limitations with Amplify and Route 53.  
+  [Read more here](https://docs.aws.amazon.com/amplify/latest/userguide/custom-domains.html)  
+  ![Route 53 + Amplify](./screenshots/amplify-route53.png)
+
 
 ---
 
