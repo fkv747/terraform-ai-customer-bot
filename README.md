@@ -10,7 +10,7 @@
 ![API Gateway](https://img.shields.io/badge/API%20Gateway-HTTP%20API-DD3464?style=for-the-badge&logo=amazonaws)
 ![Serverless Architecture](https://img.shields.io/badge/Architecture-Serverless-4B5563?style=for-the-badge)
 
-This project is a real-time, serverless chatbot powered by **Amazon Bedrock (Titan G1)** and delivered through a clean Amplify frontend. It pulls responses from a custom FAQ prompt, logs chats to DynamoDB, and is deployed with Terraform.
+This is a fully serverless AI chatbot built with Amazon Bedrock (Titan G1), Lambda, and Terraform, designed to answer customer questions in real time based on a curated FAQ prompt. The frontend is deployed using AWS Amplify with a custom Route 53 domain, and all interactions are logged in DynamoDB for session tracking.
 
 ---
 
