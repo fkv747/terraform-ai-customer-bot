@@ -19,13 +19,11 @@ This is a fully serverless AI chatbot built with Amazon Bedrock (Titan G1), Lamb
 🎥 **Watch the full demo on YouTube**  
 
 
-[Watch the YouTube demo](https://youtu.be/)
+[Watch the YouTube demo](https://www.youtube.com/watch?v=VCxfDRWnaK0)
 
 ---
 
 ## 📊 Architecture
-
-This diagram summarizes the AWS architecture of this project:
 
 ![Architecture](./screenshots/ai-customer-bot.png)
 
