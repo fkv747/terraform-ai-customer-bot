@@ -23,7 +23,7 @@ This is a fully serverless AI chatbot built with Amazon Bedrock (Titan G1), Lamb
 
 ---
 
-## 📊 Architecture
+## Architecture
 
 ![Architecture](./screenshots/ai-customer-bot.png)
 
