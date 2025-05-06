@@ -55,6 +55,8 @@ You are Friday. Answer questions based only on the following FAQs:
 Now answer the following question naturally and clearly:
 {user_input}
 """
+    print("User input:")
+    print(user_input)
 
     # Call Amazon Bedrock (Titan Text G1)
     bedrock = boto3.client("bedrock-runtime", region_name="us-east-1")
@@ -79,8 +81,11 @@ Now answer the following question naturally and clearly:
 
         response_body = json.loads(response['body'].read())
         generated_text = response_body['results'][0]['outputText']
+        
+        print("Bedrock reply:")
+        print(generated_text)
 
-        # ✅ NEW: Log to DynamoDB
+        #NEW: Log to DynamoDB
         table.put_item(
         Item={
             "session_id": str(uuid.uuid4()),
